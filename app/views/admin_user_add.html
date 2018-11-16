@@ -1,10 +1,11 @@
 {{define "content"}}
 <div class="wrapper">
-    <form class="login-form" method="POST">
+
+    <form class="login-form" method="POST" onsubmit="checkMatch()">
 
         <div class="logo-wrapper">
             <a href="/"><img class="logo" src="/assets/logo.png" alt="Guard"></a>
-            <h2>Edit your password</h2>
+            <h1>Add a new user</h1>
         </div>
 
         {{ if .alreadyTaken }}
@@ -18,11 +19,11 @@
         </div>
 
         <div class="input-wrapper">
-            <input type="password" name="password" id="new_pwd" placeholder="Confirmation">
+            <input type="password" name="Password" id="pwd" placeholder="New password">
         </div>
 
         <div class="input-wrapper">
-            <input type="password" placeholder="New password, again" id="new_pwd2" oninput="checkMatch()">
+            <input type="password" placeholder="Password, again" id="pwd2" oninput="checkMatch()">
         </div>
 
         <div class="input-wrapper-checkbox">
@@ -31,22 +32,24 @@
         </div>
 	
     	<div class="login-wrapper">
-            <button>Add</button>
+            <button type="submit">Add</button>
         </div>
+
+      <script>
+      function checkMatch() {
+          let pwd = document.querySelector("#pwd");
+          let pwd2 = document.querySelector("#pwd2");
+
+          if(pwd.value !== pwd2.value) {
+              pwd2.classList.add('input-error');
+              return false;
+          } else {
+              pwd2.classList.remove('input-error');
+          }
+      }
+      </script>
 
     </form>
 </div>
 
-<script type="text/javascript">
-function checkMatch() {
-    let pwd = document.querySelector("#new_pwd");
-    let pwd2 = document.querySelector("#new_pwd2");
-
-    if(pwd.value !== pwd2.value) {
-        pwd2.classList.add('input-error');
-    } else {
-        pwd2.classList.remove('input-error');
-    }
-}
-</script>
 {{end}}
